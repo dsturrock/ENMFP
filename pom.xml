@@ -4,7 +4,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>org.societies</groupId>
 	<!-- change the artifactid to your project artifactid -->
-	<artifactId>musicplaylists</artifactId>
+	<artifactId>musicidentify.service</artifactId>
 	<packaging>bundle</packaging>
 	<version>0.1</version>
 	<developers>
@@ -39,7 +39,7 @@
 						<Bundle-Activator></Bundle-Activator>
 						<Embed-Dependency>*;scope=compile|runtime</Embed-Dependency>
 						<Embed-Transitive>true</Embed-Transitive>
-						<Import-Package>*;resolution:=optional</Import-Package>
+						<!--  <Import-Package>*;resolution:=optional</Import-Package>-->
 						<!-- <Export-Package></Export-Package>-->
 					</instructions>
 				</configuration>

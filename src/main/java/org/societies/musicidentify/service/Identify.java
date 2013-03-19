@@ -1,6 +1,7 @@
-package musicidentify;
+package org.societies.musicidentify.service;
 
-public class Identify {
+
+public interface Identify {
 	
 	String code = "";
 	//Call the music identification services URL and get the metadata for this song
