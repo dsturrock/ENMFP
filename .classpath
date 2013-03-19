@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+  <classpathentry kind="output" path="target/classes"/>
+  <classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+  <classpathentry kind="var" path="M2_REPO/org/societies/api/external/societies-api/0.5/societies-api-0.5.jar"/>
+  <classpathentry kind="var" path="M2_REPO/org/societies/api/schema/societies-api-schema/0.5/societies-api-schema-0.5.jar"/>
+  <classpathentry kind="var" path="M2_REPO/org/simpleframework/simple-xml/2.6.4/simple-xml-2.6.4.jar"/>
+  <classpathentry kind="var" path="M2_REPO/org/societies/maven/converters/SimpleXMLConverters/0.5/SimpleXMLConverters-0.5.jar"/>
+  <classpathentry kind="var" path="M2_REPO/org/societies/utilities/societies-annotations/0.5/societies-annotations-0.5.jar"/>
+</classpath>
