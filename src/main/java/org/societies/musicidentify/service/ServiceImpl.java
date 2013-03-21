@@ -35,5 +35,13 @@ public class ServiceImpl implements Identify {
 	
 	public void init() {
 	}
-
+//getter method for the context broker service
+	public ICtxBroker getBroker(){
+		System.out.println("Context Broker: " +this.cxtBrokerService);
+		return this.cxtBrokerService;
+	}
+	
+	public void setBroker(ICtxBroker cxtBroker){
+		this.cxtBrokerService=cxtBroker;
+	}
 }
