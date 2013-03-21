@@ -9,19 +9,27 @@ http://www.springframework.org/schema/context/spring-context-2.5.xsd
 http://www.springframework.org/schema/osgi-compendium
 http://www.springframework.org/schema/osgi-compendium/spring-osgi-compendium-1.2.xsd"
 xmlns:context="http://www.springframework.org/schema/context">
-<bean id="myService" class="org.societies.musicidentify.service.Identify">
+<bean id="musicIdentifyService" class="org.societies.musicidentify.service.Identify">
      <!-- a reference to a required service. 'name' should be the same as member 
               variable in your impl class and the 'ref' should be the same as the 
               osgi:service ref in the bundle-context-osgi.xml file -->
-     <property name="cxtBrokerService" ref="cxtBrokerRef" />
+     <property name="ctxBrokerService" ref="cxtBrokerRef" />
  
  </bean>
 
 <!-- Service References -->
- <osgi:reference id="cxtBrokerRef" interface="org.societies.api.context.broker.ICtxBroker" />
+ <osgi:reference id="ctxBrokerRef" interface="org.societies.api.context.broker.ICtxBroker" />
+ <osgi:reference id="UserPrefMgr" interface="org.societies.personalisation.preference.api.UserPreferenceManagement.IUserPreferenceManagement"/>
+ <osgi:reference id="UserCtxBroker" interface="org.societies.api.internal.context.broker.IUserCtxBroker"/>
  
  <!-- Provided Services -->
- <osgi:service ref="myService" interface="org.societies.musicidentify.service.Identify">
+ <osgi:service ref="PersonalisationManager">
+ <osgi:interfaces>
+ 	<value>org.societies.api.personalisation.mgmt.IPersonalisationManager</value>
+ 	<value>org.societies.personalisation.common.api.management.IInternalPersonalisationManager</value>
+ 	</osgi:interfaces></osgi:service>
+ 	
+ <osgi:service ref="musicIdentifyService" interface="org.societies.musicidentify.service.Identify">
      <osgi:service-properties>
          <entry key="TargetPlatform" value="SOCIETIES" />
          <entry key="ServiceProvider" value="ICT-SOCIETIES" />
@@ -29,6 +37,7 @@ xmlns:context="http://www.springframework.org/schema/context">
          <entry key="ServiceClient" value="http://societies.local/client.jar" />
      </osgi:service-properties>
  </osgi:service>
+ 
     <bean id="serMetamodel" class="org.societies.api.schema.servicelifecycle.model.Service">
      <property name="authorSignature" value="David Sturrock" />
      <property name="serviceDescription" value="A service providing adaptive music playlists, designed to accumulate data as users play music and make reccommendations/playlists based on the data received from an individual and related users" />
