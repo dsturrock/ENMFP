@@ -1,0 +1,131 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>org.societies</groupId>
+	<!-- change the artifactid to your project artifactid -->
+	<artifactId>server.musicidentify.service</artifactId>
+	<packaging>bundle</packaging>
+	<version>0.1</version>
+	<developers>
+		<developer>
+			<id>dsturrock</id>
+			<name>David Sturrock</name>
+			<email>sturrockad@gmail.com</email>
+			<organization>HW</organization>
+			<roles>
+				<role>owner</role>
+				<role>developer</role>
+			</roles>
+		</developer>
+	</developers>
+	<!-- Add your classpath dependencies here -->
+	<dependencies>
+	<dependency>
+			<groupId>net.jthink</groupId>
+			<artifactId>jaudiotagger</artifactId>
+			<version>2.2.0-SNAPSHOT</version>
+			<scope>provided</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.societies.api.external</groupId>
+			<artifactId>societies-api</artifactId>
+			<version>0.5</version>
+			<scope>provided</scope>
+		</dependency>
+
+		<dependency>
+      <groupId>org.springframework</groupId>
+      <artifactId>org.springframework.context</artifactId>
+      <version>3.0.5.RELEASE</version>
+      		<scope>provided</scope>
+    </dependency>
+	</dependencies>
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.felix</groupId>
+				<artifactId>maven-bundle-plugin</artifactId>
+				<extensions>true</extensions>
+				<configuration>
+					<instructions>
+						<Bundle-Activator></Bundle-Activator>
+						<Embed-Dependency>*;scope=compile|runtime</Embed-Dependency>
+						<Embed-Transitive>true</Embed-Transitive>
+						<!--  <Import-Package>*;resolution:=optional</Import-Package>-->
+						<!-- <Export-Package></Export-Package>-->
+					</instructions>
+				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-surefire-plugin</artifactId>
+				<version>2.11</version>
+				<configuration>
+					<skipTests>false</skipTests>
+				</configuration>
+			</plugin>
+
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-dependency-plugin</artifactId>
+				<executions>
+						<!-- Used to copy the generated artifact to the container defined by 
+							VIRGO_HOME -->
+						<execution>
+							<id>copy</id>
+							<phase>install</phase>
+							<goals>
+								<goal>copy</goal>
+							</goals>
+							<configuration>
+								<stripVersion>false</stripVersion>
+							</configuration>
+						</execution>
+						<!-- Used to analyze the dependencies of the project. Will print warnings 
+							during verify phase,directly before install phase -->
+						<execution>
+							<id>analyze</id>
+							<phase>verify</phase>
+							<goals>
+								<goal>analyze-only</goal>
+							</goals>
+							<configuration>
+								<failOnWarning>false</failOnWarning>
+							</configuration>
+						</execution>
+					</executions>
+				<configuration>
+					<artifactItems>
+						<artifactItem>
+							<groupId>${project.groupId}</groupId>
+							<artifactId>${project.artifactId}</artifactId>
+							<version>${project.version}</version>
+							<type>jar</type>
+							<overWrite>true</overWrite>
+							<outputDirectory>${spring.osgi.deploy.dir}</outputDirectory>
+						</artifactItem>
+					</artifactItems>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
+	<repositories>
+		<!-- Societies Maven repository -->
+		<repository>
+			<id>societies</id>
+			<name>Societies Maven Repository</name>
+			<url>http://maven.ict-societies.eu/nexus/content/repositories/thirdparty/</url>
+		</repository>
+		<repository>
+            <id>java.net-Public</id>
+            <name>Maven Java Net Snapshots and Releases</name>
+            <url>https://maven.java.net/content/groups/public/</url>
+        </repository>
+	</repositories>
+	<parent>
+		<groupId>org.societies</groupId>
+		<artifactId>builder</artifactId>
+		<version>0.5</version>
+	</parent>
+</project>
