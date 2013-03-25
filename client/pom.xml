@@ -33,18 +33,27 @@
 			<version>0.5</version>
 			<scope>provided</scope>
 		</dependency>
-
 		<dependency>
-      <groupId>org.springframework</groupId>
-      <artifactId>org.springframework.context</artifactId>
-      <version>3.0.5.RELEASE</version>
+			<groupId>jivesoftware</groupId>
+			<artifactId>smack</artifactId>
+			<version>3.1.0</version>
+		</dependency>
+        <dependency>
+	      <groupId>org.springframework</groupId>
+	      <artifactId>org.springframework.context</artifactId>
+	      <version>3.0.5.RELEASE</version>
       		<scope>provided</scope>
-    </dependency>
-   <dependency>
-	<groupId>org.osgi</groupId>
-	<artifactId>org.osgi</artifactId>
-	<version>3.0.0</version>
-</dependency>
+   		 </dependency>
+	   <dependency>
+			<groupId>org.osgi</groupId>
+			<artifactId>org.osgi</artifactId>
+			<version>3.0.0</version>
+		</dependency>
+         <dependency>
+			<groupId>org.json</groupId>
+			<artifactId>json</artifactId>
+			<version>20090211</version>
+		</dependency>
             
             
 	</dependencies>

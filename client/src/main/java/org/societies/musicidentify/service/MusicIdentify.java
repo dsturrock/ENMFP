@@ -31,6 +31,11 @@ import javax.swing.filechooser.*;
 
 import org.jaudiotagger.audio.*;
 import org.jaudiotagger.tag.*;
+import org.jivesoftware.smack.ConnectionConfiguration;
+import org.jivesoftware.smack.XMPPConnection;
+import org.jivesoftware.smack.XMPPException;
+import org.jivesoftware.smack.packet.Message;
+import org.jivesoftware.smack.packet.Presence;
 import org.json.*;
 
 import java.awt.BorderLayout;
@@ -44,8 +49,11 @@ import java.util.Map.Entry;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Future;
 
+import org.osgi.framework.BundleActivator;
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.ServiceRegistration;
+import org.societies.api.comm.xmpp.datatypes.Stanza;
+import org.societies.api.comm.xmpp.exceptions.CommunicationException;
 import org.societies.api.comm.xmpp.interfaces.ICommManager;
 import org.societies.api.context.CtxException;
 import org.societies.api.context.broker.ICtxBroker;
@@ -68,7 +76,6 @@ public class MusicIdentify implements MusicIdentifyService {
 	//private static Logger log = LoggerFactory.getLogger(MusicIdentify.class);	
 
 	private ServiceRegistration registration;
-	private BundleContext context;
 	// private Requestor requestor;
 	private RequestorService requestorService;
 	private ServiceResourceIdentifier myServiceID;
@@ -86,6 +93,10 @@ public class MusicIdentify implements MusicIdentifyService {
     private JTextArea trackList;
     private JTextArea autoList;
 
+    private XMPPConnection conn;
+    private static final Presence AVAILABLE = new Presence(Presence.Type.available);
+    private static final Presence UNAVAILABLE = new Presence(Presence.Type.unavailable);
+    	
 	ArrayList<String> Playlist = new ArrayList<String>();
 	String PlaylistString ="";
 	String primaryGenre="";
@@ -96,12 +107,12 @@ public class MusicIdentify implements MusicIdentifyService {
 	
 	File input;
 	
-	public MusicIdentify(){
+	public MusicIdentify() throws XMPPException{
 		
-		
+
 		
 	}
-	public void init() {
+	public void start(BundleContext context)throws Exception { 
 		
 		String OS =System.getProperty("os.name");
 		System.out.println("OS: "+ OS);
@@ -111,8 +122,22 @@ public class MusicIdentify implements MusicIdentifyService {
 		
 		registration = context.registerService(MusicIdentifyService.class.getName(), this, props);
 		user = getCommManager().getIdManager().getThisNetworkNode();
+		
+		swingInitAndGetInputFile();
+		createAndShowGUI();
+		
+
+		
+		Stanza note = new Stanza("startup",user,getCommManager().getIdManager().fromJid(getCommManager().getIdManager().getDomainAuthorityNode().getJid()));
+		
+		getCommManager().sendMessage(note, "Bundle: " + context.getBundle() + " started");
+		}
+
+		public void stop(BundleContext context) throws Exception {
+			Stanza note = new Stanza("startup",user,getCommManager().getIdManager().fromJid(getCommManager().getIdManager().getDomainAuthorityNode().getJid()));
+			
+			getCommManager().sendMessage(note, "Bundle: " + context.getBundle() + " stopped");
 	}
-	
 	@Async
 	private void delayedinit(){
 		
@@ -225,8 +250,21 @@ public class MusicIdentify implements MusicIdentifyService {
 							PlaylistString+=current+"\n";
 						}
 						PlaylistString+=tempPlaylist;
-						//updateContextAttribute("Playlist",PlaylistString);
-					}
+						
+						try {
+						Stanza note = new Stanza("startup",user,getCommManager().getIdManager().fromJid(getCommManager().getIdManager().getDomainAuthorityNode().getJid()));
+						
+						
+						getCommManager().sendMessage(note, PlaylistString);
+						} catch (CommunicationException e) {
+							
+							e.printStackTrace();
+						} catch (InvalidFormatException e) {
+							e.printStackTrace();
+						}
+						catch (Exception e) {
+							e.printStackTrace();
+					}		}
         	}
         );
 
@@ -247,6 +285,13 @@ public class MusicIdentify implements MusicIdentifyService {
         parent.add(playlists,BorderLayout.PAGE_END);
 	}
 	  
+	@Async
+	
+	private void inbox(){
+		
+		
+	}
+	//Call getSharedPlaylists in ICommCallBac as async
 	//Retrieve the meta-data from the file using jaudiotagger then keep track of the genres and playlist
 	private void identify(File inputFile) {
 		String genre="";
@@ -508,9 +553,9 @@ public class MusicIdentify implements MusicIdentifyService {
 	//Initialises the class and handles most method calls
 	public static final void main(String[] args){
 		
-		MusicIdentify instance = new MusicIdentify();
-		instance.swingInitAndGetInputFile();
-		instance.createAndShowGUI();
+		//MusicIdentify instance = new MusicIdentify();
+		//instance.swingInitAndGetInputFile();
+		//instance.createAndShowGUI();
 
 	}
 

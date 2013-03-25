@@ -7,6 +7,8 @@ import org.osgi.util.tracker.ServiceTracker;
  
 public class Identify implements BundleActivator {
  
+	
+
 private ServiceTracker musicServiceTracker;
 private MusicIdentifyService musicService;
  

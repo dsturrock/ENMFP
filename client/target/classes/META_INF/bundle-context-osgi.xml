@@ -19,17 +19,10 @@ xmlns:context="http://www.springframework.org/schema/context">
 
 <!-- Service References -->
  <osgi:reference id="ctxBrokerRef" interface="org.societies.api.context.broker.ICtxBroker" />
- <osgi:reference id="UserPrefMgr" interface="org.societies.personalisation.preference.api.UserPreferenceManagement.IUserPreferenceManagement"/>
  <osgi:reference id="UserCtxBroker" interface="org.societies.api.internal.context.broker.IUserCtxBroker"/>
  
- <!-- Provided Services -->
- <osgi:service ref="PersonalisationManager">
- <osgi:interfaces>
- 	<value>org.societies.api.personalisation.mgmt.IPersonalisationManager</value>
- 	<value>org.societies.personalisation.common.api.management.IInternalPersonalisationManager</value>
- 	</osgi:interfaces></osgi:service>
- 	
- <osgi:service ref="musicIdentifyService" interface="org.societies.musicidentify.service.MusicIdentifyl">
+
+ <osgi:service ref="musicIdentifyService" interface="org.societies.musicidentify.service.MusicIdentify">
      <osgi:service-properties>
          <entry key="TargetPlatform" value="SOCIETIES" />
          <entry key="ServiceProvider" value="ICT-SOCIETIES" />

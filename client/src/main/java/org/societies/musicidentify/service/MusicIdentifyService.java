@@ -1,5 +1,6 @@
 package org.societies.musicidentify.service;
 
+import org.osgi.framework.BundleContext;
 import org.societies.api.comm.xmpp.interfaces.ICommManager;
 import org.societies.api.context.broker.ICtxBroker;
 import org.societies.api.identity.IIdentity;
@@ -17,6 +18,8 @@ public interface MusicIdentifyService {
 	
 	public ICommManager getCommManager() ;
 
+	public void start(BundleContext context) throws Exception;
+	public void stop(BundleContext context) throws Exception;
 	public void setCommManager(ICommManager commManager);
 	
 }
