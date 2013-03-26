@@ -42,7 +42,6 @@ import org.societies.api.comm.xmpp.exceptions.CommunicationException;
 import org.societies.api.comm.xmpp.exceptions.XMPPError;
 import org.societies.api.comm.xmpp.interfaces.ICommManager;
 import org.societies.api.comm.xmpp.interfaces.IFeatureServer;
-import org.societies.api.musicidentify.schema.playlist;
 
 public class MusicIdentifyFeatureServer implements IFeatureServer {
 
@@ -57,7 +56,6 @@ public class MusicIdentifyFeatureServer implements IFeatureServer {
 	// PRIVATE VARIABLES
 	private ICommManager commManager;
 	private MusicIdentifyServer musicServer;
-	private musicIdentifyItem mitem;
 //	private static Logger LOG = LoggerFactory
 //			.getLogger(NZoneCommsServer.class);
 
@@ -86,7 +84,7 @@ public class MusicIdentifyFeatureServer implements IFeatureServer {
 		// Registry Networking Directory with the Comms Manager
 		try {
 			getCommManager().register(this);
-			LOG.info("Registered NZoneCommsServer with the xc manager");
+			//LOG.info("Registered NZoneCommsServer with the xc manager");
 		} catch (CommunicationException e) {
 			e.printStackTrace();
 		}
@@ -112,40 +110,36 @@ public class MusicIdentifyFeatureServer implements IFeatureServer {
 	@Override
 	public Object getQuery(Stanza stanza, Object payload) throws XMPPError {
 
-		if (LOG.isDebugEnabled())
-			LOG.debug("getQuery: Received a message!");
+//		if (LOG.isDebugEnabled())
+//			LOG.debug("getQuery: Received a message!");
+//
+//		if (payload.getClass().equals(musicIdentifyItem.class)) {
+//
+////			if (LOG.isDebugEnabled())
+////				LOG.debug("Remote call to NZone Comms Server");
+//
+//			try {
+//				switch (messageBean.getMethod()) {
+//
+//					
+////					case GET_PLAYLIST:	
+////					{
+////						List<playlist> returnData = new ArrayList<playlist>();
+////						returnData.add(getNzoneServer().getProfileDetails(stanza.getFrom().getBareJid()));
+////						messageResult.setUserdata(returnData);
+////						messageResult.setResult(true);
+////						break;
+////					}
+////					
+//					
+//				}
+//			} catch (Exception e) {
+//				e.printStackTrace();
+//			};
+//
+//			return messageResult;
 
-		if (payload.getClass().equals(musicIdentifyItem.class)) {
-
-//			if (LOG.isDebugEnabled())
-//				LOG.debug("Remote call to NZone Comms Server");
-
-			musicIdentifyItem messageBean = (musicIdentifyItem) payload;
-			musicIdentifyResult messageResult = new musicIdentifyResult();
-			messageResult.setResult(false);
-
-			try {
-				switch (messageBean.getMethod()) {
-
-					
-					case GET_PLAYLIST:	
-					{
-						List<playlist> returnData = new ArrayList<playlist>();
-						returnData.add(getNzoneServer().getProfileDetails(stanza.getFrom().getBareJid()));
-						messageResult.setUserdata(returnData);
-						messageResult.setResult(true);
-						break;
-					}
-					
-					
-				}
-			} catch (Exception e) {
-				e.printStackTrace();
-			};
-
-			return messageResult;
-
-		}
+		//}
 
 		return null;
 	}

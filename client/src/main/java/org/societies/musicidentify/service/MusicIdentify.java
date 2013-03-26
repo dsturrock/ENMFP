@@ -258,9 +258,9 @@ public class MusicIdentify implements MusicIdentifyService {
 						try {
 						Stanza note = new Stanza("playlist",user,getCommManager().getIdManager().fromJid(getCommManager().getIdManager().getDomainAuthorityNode().getJid()));
 						
-						//getCommManager().sendIQGet(note, playlistBean, PlaylistString);
+						getCommManager().sendIQGet(note, PlaylistString, getMessageCallback());
 
-						getCommManager().sendMessage(note, PlaylistString);
+						//getCommManager().sendMessage(note, PlaylistString);
 						} catch (CommunicationException e) {
 							
 							e.printStackTrace();
@@ -294,7 +294,7 @@ public class MusicIdentify implements MusicIdentifyService {
 	
 	private void inbox(){
 		
-		Playlist+="\n "+callback.getPlaylist();
+		PlaylistString+="\n "+callback.getPlaylist();
 		generatePlaylist();
 		
 		JLabel playlistHeader = new JLabel("Your current playlist: ");

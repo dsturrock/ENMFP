@@ -1,8 +1,8 @@
 /**
  * Copyright (c) 2011, SOCIETIES Consortium (WATERFORD INSTITUTE OF TECHNOLOGY (TSSG), HERIOT-WATT UNIVERSITY (HWU), SOLUTA.NET 
  * (SN), GERMAN AEROSPACE CENTRE (Deutsches Zentrum fuer Luft- und Raumfahrt e.V.) (DLR), Zavod za varnostne tehnologije
- * informacijske družbe in elektronsko poslovanje (SETCCE), INSTITUTE OF COMMUNICATION AND COMPUTER SYSTEMS (ICCS), LAKE
- * COMMUNICATIONS (LAKE), INTEL PERFORMANCE LEARNING SOLUTIONS LTD (INTEL), PORTUGAL TELECOM INOVAÇÃO, SA (PTIN), IBM Corp., 
+ * informacijske druï¿½be in elektronsko poslovanje (SETCCE), INSTITUTE OF COMMUNICATION AND COMPUTER SYSTEMS (ICCS), LAKE
+ * COMMUNICATIONS (LAKE), INTEL PERFORMANCE LEARNING SOLUTIONS LTD (INTEL), PORTUGAL TELECOM INOVAï¿½ï¿½O, SA (PTIN), IBM Corp., 
  * INSTITUT TELECOM (ITSUD), AMITEC DIACHYTI EFYIA PLIROFORIKI KAI EPIKINONIES ETERIA PERIORISMENIS EFTHINIS (AMITEC), TELECOM 
  * ITALIA S.p.a.(TI),  TRIALOG (TRIALOG), Stiftelsen SINTEF (SINTEF), NEC EUROPE LTD (NEC))
  * All rights reserved.
@@ -30,8 +30,8 @@ import java.util.Collections;
 import java.util.List;
 import java.util.concurrent.CountDownLatch;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+//import org.slf4j.Logger;
+//import org.slf4j.LoggerFactory;
 import org.societies.api.comm.xmpp.datatypes.Stanza;
 import org.societies.api.comm.xmpp.datatypes.XMPPInfo;
 import org.societies.api.comm.xmpp.exceptions.CommunicationException;
@@ -43,11 +43,6 @@ import org.societies.api.comm.xmpp.interfaces.ICommManager;
 import org.societies.api.identity.IIdentity;
 import org.societies.api.identity.InvalidFormatException;
 
-import org.societies.api.ext3p.schema.nzone.Method;
-import org.societies.api.ext3p.schema.nzone.NzoneBean;
-import org.societies.api.ext3p.schema.nzone.NzoneBeanResult;
-import org.societies.api.ext3p.schema.nzone.ZoneDetails;
-import org.societies.api.ext3p.schema.nzone.UserDetails;
 
 /**
  * Comms Client that initiates the remote communication for the networking zone
@@ -67,12 +62,12 @@ public class MusicIdentifyMessageCallback implements ICommCallback {
 	// PRIVATE VARIABLES
 	private ICommManager commManager;
 	//private static Logger LOG = LoggerFactory.getLogger(NZoneClientComms.class);
-	private musicIdentifyResult commsResult;
 	CountDownLatch startSignal;
 
 
 	
 	private String netServerID;
+	private String outputString=null;
 	
 	// PROPERTIES
 	public ICommManager getCommManager() {
@@ -183,6 +178,9 @@ public class MusicIdentifyMessageCallback implements ICommCallback {
 	}
 
 	/*
+	 * Receive incoming messages and pass the result back to the calling class
+	 * 
+	 * 
 	 * (non-Javadoc)
 	 * 
 	 * @see
@@ -192,9 +190,11 @@ public class MusicIdentifyMessageCallback implements ICommCallback {
 	@Override
 	public void receiveResult(Stanza arg0, Object arg1) {
 		// TODO Auto-generated method stub
-		if (arg1 instanceof NzoneBeanResult){
-			commsResult = (NzoneBeanResult) arg1;
+	
+		if(arg1!=null){
+			 outputString=(String) arg1;
 			startSignal.countDown();
+
 		}
 	}
 
@@ -210,41 +210,38 @@ public class MusicIdentifyMessageCallback implements ICommCallback {
 		this.netServerID = netServerID;
 	}
 
-	public playlist getPlaylist() {
-		IIdentity toIdentity = null;
-		commsResult = null;
-		try {
-			toIdentity = getCommManager().getIdManager().fromJid(netServerID);
-		} catch (InvalidFormatException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		}
-		Stanza stanza = new Stanza(toIdentity);
-						
-		// CREATE MESSAGE BEAN
-		MusicIdentifyItem messageObj = new MusicIdentifyItem();
-		messageObj.setMethod(Method.GET_PLAYLIST);
-			
-		startSignal = new CountDownLatch(1);
-						
-		try {
-			getCommManager().sendIQGet(stanza, netBean, this);
-							
-		} catch (CommunicationException e) {
-			LOG.warn(e.getMessage());
-		};
-
-		try {
-			startSignal.await();
-		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-								
+	public String getPlaylist() {
+//		IIdentity toIdentity = null;
+//	
+//		try {
+//			toIdentity = getCommManager().getIdManager().fromJid(netServerID);
+//		} catch (InvalidFormatException e1) {
+//			// TODO Auto-generated catch block
+//			e1.printStackTrace();
+//		}
+//		Stanza stanza = new Stanza(toIdentity);
+//						
+//		startSignal = new CountDownLatch(1);
+//						
+//		try {
+//			getCommManager().sendIQGet(stanza, netBean, this);
+//							
+//		} catch (CommunicationException e) {
+//			LOG.warn(e.getMessage());
+//		};
+//
+//		try {
+//			startSignal.await();
+//		} catch (InterruptedException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}
+//								
 				
-		if ((commsResult != null) && (this.commsResult.getPlaylist() != null))
-			return this.commsResult.getPlaylist().get(0);
-				
+		if ((outputString != null) )
+			return outputString;
+		else
+			return "";
 		return null;
 	}
 
