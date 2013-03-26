@@ -5,7 +5,7 @@
 	<groupId>org.societies</groupId>
 	<artifactId>builder</artifactId>
 	<packaging>pom</packaging>
-	<version>0.5</version>
+	<version>0.6</version>
 	<developers>
 		<developer>
 			<id>dsturrock</id>
@@ -21,7 +21,7 @@
 	<modules>
 		<module>server</module>
 		<module>client</module>
-    <module>clients</module>
+    <module>api</module>
   </modules>
 	
 </project>

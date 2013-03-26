@@ -64,6 +64,23 @@
 				<artifactId>maven-bundle-plugin</artifactId>
 				<extensions>true</extensions>
 				<configuration>
+				       <lifecycleMappingMetadata>
+     <pluginExecutions>
+       <pluginExecution>
+         <pluginExecutionFilter>
+           <groupId>some-group-id</groupId>
+           <artifactId>some-artifact-id</artifactId>
+           <versionRange>[1.0.0,)</versionRange>
+           <goals>
+             <goal>some-goal</goal>
+           </goals>
+         </pluginExecutionFilter>
+         <action>
+           <ignore />
+         </action>
+       </pluginExecution>
+     </pluginExecutions>
+   </lifecycleMappingMetadata>
 					<instructions>
 						<Bundle-Activator></Bundle-Activator>
 						<Embed-Dependency>*;scope=compile|runtime</Embed-Dependency>
@@ -92,6 +109,6 @@
 	<parent>
 		<groupId>org.societies</groupId>
 		<artifactId>builder</artifactId>
-		<version>0.5</version>
+		<version>0.6</version>
 	</parent>
 </project>
