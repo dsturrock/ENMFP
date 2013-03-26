@@ -68,6 +68,7 @@ public class MusicIdentify implements MusicIdentifyService {
 	//Fields to get the context information related to the current user
 	public ICtxBroker ctxBrokerService;
 	private ICommManager commManager;
+	private MusicIdentifyMessageCallback callback;
 	public CtxModelObject userTaste;
 	public CtxModelObject userPlaylist;
 	private IIdentity user;
@@ -92,22 +93,19 @@ public class MusicIdentify implements MusicIdentifyService {
     private JFileChooser fc;
     private JTextArea trackList;
     private JTextArea autoList;
-
-    private XMPPConnection conn;
-    private static final Presence AVAILABLE = new Presence(Presence.Type.available);
-    private static final Presence UNAVAILABLE = new Presence(Presence.Type.unavailable);
-    	
+	
 	ArrayList<String> Playlist = new ArrayList<String>();
 	String PlaylistString ="";
 	String primaryGenre="";
 	String secondaryGenre="";
 	String artist="";
+	String secondaryArtist="";
 	String automaticPlaylist="";
 	Map<String,Integer> genreTally = new HashMap<String,Integer>();
 	
 	File input;
 	
-	public MusicIdentify() throws XMPPException{
+	public MusicIdentify(){
 		
 
 		
@@ -128,9 +126,9 @@ public class MusicIdentify implements MusicIdentifyService {
 		
 
 		
-		Stanza note = new Stanza("startup",user,getCommManager().getIdManager().fromJid(getCommManager().getIdManager().getDomainAuthorityNode().getJid()));
+		//Stanza note = new Stanza("startup",user,getCommManager().getIdManager().fromJid(getCommManager().getIdManager().getDomainAuthorityNode().getJid()));
 		
-		getCommManager().sendMessage(note, "Bundle: " + context.getBundle() + " started");
+		//getCommManager().sendMessage(note, "Bundle: " + context.getBundle() + " started");
 		}
 
 		public void stop(BundleContext context) throws Exception {
@@ -171,7 +169,13 @@ public class MusicIdentify implements MusicIdentifyService {
 	public void setBroker(ICtxBroker cxtBroker){
 		this.ctxBrokerService=cxtBroker;
 	}
-	
+	public MusicIdentifyMessageCallback getMessageCallback() {
+		return callback;
+	}
+
+	public void setMessageCallback(MusicIdentifyMessageCallback callback) {
+		this.callback = callback;
+	}
 	public IServices getServiceMgmt() {
 		return serviceMgmt;
 	}
@@ -252,9 +256,10 @@ public class MusicIdentify implements MusicIdentifyService {
 						PlaylistString+=tempPlaylist;
 						
 						try {
-						Stanza note = new Stanza("startup",user,getCommManager().getIdManager().fromJid(getCommManager().getIdManager().getDomainAuthorityNode().getJid()));
+						Stanza note = new Stanza("playlist",user,getCommManager().getIdManager().fromJid(getCommManager().getIdManager().getDomainAuthorityNode().getJid()));
 						
-						
+						//getCommManager().sendIQGet(note, playlistBean, PlaylistString);
+
 						getCommManager().sendMessage(note, PlaylistString);
 						} catch (CommunicationException e) {
 							
@@ -289,9 +294,33 @@ public class MusicIdentify implements MusicIdentifyService {
 	
 	private void inbox(){
 		
+		Playlist+="\n "+callback.getPlaylist();
+		generatePlaylist();
+		
+		JLabel playlistHeader = new JLabel("Your current playlist: ");
+        JTextArea sharedtrackList = new JTextArea(5,20);
+        sharedtrackList.setMargin(new Insets(5,5,5,5));
+        sharedtrackList.setEditable(false);
+        JScrollPane playlistPane = new JScrollPane(trackList);
+        
+        JLabel autoHeader = new JLabel("Your recommended music: ");
+        JTextArea sharedautoList = new JTextArea(5,20);
+        sharedautoList.setMargin(new Insets(5,5,5,5));
+        sharedautoList.setEditable(false);
+        JScrollPane autoPane = new JScrollPane(autoList);
+       
+		 JPanel sharedplaylists = new JPanel();
+	        sharedplaylists.add(playlistHeader);
+	        sharedplaylists.add(playlistPane);
+	        sharedplaylists.add(autoHeader);
+	        sharedplaylists.add(autoPane);
+	               
+	        //Add the buttons and the playlist displays to this panel
+	        parent.add(sharedplaylists,BorderLayout.PAGE_END);
+		
 		
 	}
-	//Call getSharedPlaylists in ICommCallBac as async
+	
 	//Retrieve the meta-data from the file using jaudiotagger then keep track of the genres and playlist
 	private void identify(File inputFile) {
 		String genre="";
@@ -376,7 +405,7 @@ public class MusicIdentify implements MusicIdentifyService {
 			
 		try{
 			//Call the music identification services URL and generate some recommended songs to match the users
-			String url ="http://developer.echonest.com/api/v4/playlist/static?api_key=77ENISIQZSEQKAUFV&artist="+URLEncoder.encode(artist,"UTF-8")+"&style="+URLEncoder.encode(searchQuery,"UTF-8")+"&format=json&results=10&type=artist-radio";
+			String url ="http://developer.echonest.com/api/v4/playlist/static?api_key=77ENISIQZSEQKAUFV&artist="+URLEncoder.encode(artist,"UTF-8")+"&artist="+URLEncoder.encode(secondaryArtist,"UTF-8")+"&style="+URLEncoder.encode(searchQuery,"UTF-8")+"&format=json&results=10&type=artist-radio";
 			URL ENMFPUrl = new URL(url);
 			String JSONString="";
 			BufferedReader urlStream = new BufferedReader(new InputStreamReader(ENMFPUrl.openStream()));
@@ -551,12 +580,12 @@ public class MusicIdentify implements MusicIdentifyService {
 
  
 	//Initialises the class and handles most method calls
-	public static final void main(String[] args){
+	//public static final void main(String[] args){
 		
 		//MusicIdentify instance = new MusicIdentify();
 		//instance.swingInitAndGetInputFile();
 		//instance.createAndShowGUI();
 
-	}
+	//}
 
 }

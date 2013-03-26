@@ -1,0 +1,43 @@
+<xs:schema elementFormDefault="qualified" version="1.0"
+	xmlns="http://societies.org/server/musicidentify/service"
+	targetNamespace="http://societies.org/server/musicidentify/service"
+	xmlns:tns="http://societies.org/server/musicidentify/service"
+	xmlns:xs="http://www.w3.org/2001/XMLSchema">
+
+
+		<xs:element name="musicIdentifyItem">
+			<xs:complexType>
+				<xs:sequence>
+					<xs:element name="method" type="tns:method" minOccurs="1" />
+					<xs:element name="data" type="xs:string" minOccurs="0" maxOccurs="unbounded"/>
+					<xs:element name="details" type="tns:playlist" minOccurs="0"/>
+				</xs:sequence>
+			</xs:complexType>
+		</xs:element>
+
+		<xs:element name="musicIdentifyResult">
+			<xs:complexType>
+				<xs:sequence>
+					<xs:element name="result" type="xs:boolean" minOccurs="1" />
+					<xs:element name="data" type="xs:string" minOccurs="0" maxOccurs="unbounded"/>
+					<xs:element name="playlistdata" type="tns:playlist" minOccurs="0" maxOccurs="unbounded"/>
+				</xs:sequence>
+			</xs:complexType>
+		</xs:element>
+
+    
+		<xs:simpleType name="method">
+			<xs:restriction base="xs:string">
+				<xs:enumeration value="getPlaylist"/>
+			</xs:restriction>
+		</xs:simpleType>
+		
+		
+		<xs:complexType name="playlist">
+			<xs:sequence>
+				<xs:element name="string" type="xs:string" minOccurs="0" />
+				<xs:element name="artist" type="xs:string" minOccurs="0" />
+			</xs:sequence>
+		</xs:complexType>
+		
+	</xs:schema>
