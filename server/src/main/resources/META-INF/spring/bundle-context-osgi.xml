@@ -15,6 +15,13 @@ http://www.springframework.org/schema/osgi-compendium/spring-osgi-compendium-1.2
 	<osgi:reference id="ctxBrokerRef"
 		interface="org.societies.api.context.broker.ICtxBroker" />
 
+	<osgi:reference id="commMgrRef"
+	     interface="org.societies.api.comm.xmpp.interfaces.ICommManager"></osgi:reference>
+	    
+	<osgi:reference id="servicesRef" 
+		interface="org.societies.api.services.IServices"></osgi:reference>
+		
+		
 	<osgi:service ref="musicIdentifyService"
 		interface="org.societies.musicidentify.service.MusicIdentifyServerService">
 		<osgi:service-properties>

@@ -51,13 +51,6 @@
 		</dependency>
 
 		<dependency>
-			<groupId>org.springframework</groupId>
-			<artifactId>org.springframework.context</artifactId>
-			<version>3.0.5.RELEASE</version>
-			<scope>provided</scope>
-		</dependency>
-
-		<dependency>
 			<groupId>org.slf4j</groupId>
 			<artifactId>slf4j-simple</artifactId>
 			<version>1.6.1</version>
@@ -72,12 +65,12 @@
 				<configuration>
 					<instructions>
 						<Embed-Dependency>*;scope=compile|runtime</Embed-Dependency>
-						<Embed-Transitive>true</Embed-Transitive>
+						<Embed-Transitive>false</Embed-Transitive>
 						<Import-Package>
 							!javax.microedition.io,
 							*;resolution:=optional
 						</Import-Package>
-						<!-- <Export-Package></Export-Package> -->
+						<Export-Package></Export-Package> 
 					</instructions>
 				</configuration>
 			</plugin>
@@ -93,9 +86,9 @@
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-dependency-plugin</artifactId>
-				<executions>
-					<!-- Used to copy the generated artifact to the container defined by 
-						VIRGO_HOME -->
+				<!-- <executions>
+					Used to copy the generated artifact to the container defined by 
+						VIRGO_HOME
 					<execution>
 						<id>copy</id>
 						<phase>install</phase>
@@ -106,8 +99,8 @@
 							<stripVersion>false</stripVersion>
 						</configuration>
 					</execution>
-					<!-- Used to analyze the dependencies of the project. Will print warnings 
-						during verify phase,directly before install phase -->
+					Used to analyze the dependencies of the project. Will print warnings 
+						during verify phase,directly before install phase
 					<execution>
 						<id>analyze</id>
 						<phase>verify</phase>
@@ -118,7 +111,7 @@
 							<failOnWarning>false</failOnWarning>
 						</configuration>
 					</execution>
-				</executions>
+				</executions> -->
 				<configuration>
 					<artifactItems>
 						<artifactItem>
@@ -147,9 +140,5 @@
 			<url>https://maven.java.net/content/groups/public/</url>
 		</repository>
 	</repositories>
-	<parent>
-		<groupId>org.societies</groupId>
-		<artifactId>builder</artifactId>
-		<version>0.6</version>
-	</parent>
+	
 </project>

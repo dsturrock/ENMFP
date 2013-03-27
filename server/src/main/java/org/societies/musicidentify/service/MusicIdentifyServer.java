@@ -66,6 +66,7 @@ import org.societies.api.comm.xmpp.datatypes.Stanza;
 import org.societies.api.comm.xmpp.exceptions.CommunicationException;
 import org.societies.api.comm.xmpp.interfaces.ICommManager;
 import org.societies.api.context.broker.ICtxBroker;
+import org.societies.api.context.model.CtxAttribute;
 import org.societies.api.context.model.CtxModelObject;
 import org.societies.api.identity.IIdentity;
 import org.societies.api.identity.InvalidFormatException;
@@ -81,8 +82,8 @@ public class MusicIdentifyServer implements MusicIdentifyServerService {
 	// Fields to get the context information related to the current user
 	public ICtxBroker broker;
 	private ICommManager commManager;
-	public CtxModelObject userTaste;
-	public CtxModelObject userPlaylist;
+	public CtxAttribute userTaste;
+	public CtxAttribute userPlaylist;
 	private IIdentity user;
 	public IServices serviceMgmt;
 	// Initialise logwriter
@@ -129,8 +130,8 @@ public class MusicIdentifyServer implements MusicIdentifyServerService {
 
 	}
 
-	@Override
-	public void start() throws Exception {
+	//@Override
+	public void initialiseServer() throws Exception {
 		JOptionPane.showMessageDialog(null, "Hello World");
 		LOG.debug("start()");
 
@@ -159,8 +160,8 @@ public class MusicIdentifyServer implements MusicIdentifyServerService {
 
 	}
 
-	@Override
-	public void stop() throws Exception {
+	//@Override
+	public void destroyService() throws Exception {
 		Stanza note = new Stanza("startup", user, getCommManager()
 				.getIdManager().fromJid(
 						getCommManager().getIdManager()

@@ -1,43 +1,36 @@
 Manifest-Version: 1.0
-Bnd-LastModified: 1364384536610
-Build-Jdk: 1.6.0_41
+Bnd-LastModified: 1364389260513
+Build-Jdk: 1.7.0_01
 Built-By: High Tower
 Bundle-ClassPath: .,org.osgi-3.0.0.jar,json-20090211.jar,slf4j-simple-1.
- 6.1.jar,slf4j-api-1.6.1.jar
+ 6.1.jar
 Bundle-ManifestVersion: 2
 Bundle-Name: server.musicidentify.service
 Bundle-SymbolicName: org.societies.server.musicidentify.service
 Bundle-Version: 0.1.0
 Created-By: Apache Maven Bundle Plugin
 Embed-Dependency: *;scope=compile|runtime
-Embed-Transitive: true
+Embed-Transitive: false
 Embedded-Artifacts: org.osgi-3.0.0.jar;g="org.osgi";a="org.osgi";v="3.0.
  0",json-20090211.jar;g="org.json";a="json";v="20090211",slf4j-simple-1.
- 6.1.jar;g="org.slf4j";a="slf4j-simple";v="1.6.1",slf4j-api-1.6.1.jar;g=
- "org.slf4j";a="slf4j-api";v="1.6.1"
-Export-Package: org.societies.musicidentify.service;uses:="org.societies
- .api.context.broker,org.societies.api.comm.xmpp.datatypes,org.societies
- .api.comm.xmpp.interfaces,org.societies.api.comm.xmpp.exceptions,javax.
- swing.text,org.societies.api.identity,javax.swing,org.springframework.s
- cheduling.annotation,org.jaudiotagger.tag,org.societies.api.services,or
- g.societies.api.personalisation.model,org.jaudiotagger.audio,org.societ
- ies.api.context.model,org.societies.api.schema.servicelifecycle.model";
- version="0.1.0"
+ 6.1.jar;g="org.slf4j";a="slf4j-simple";v="1.6.1"
 Ignore-Package: javax.microedition.io
 Import-Package: javax.servlet;resolution:=optional,javax.servlet.http;re
  solution:=optional,javax.swing;resolution:=optional,javax.swing.text;re
  solution:=optional,javax.xml.parsers;resolution:=optional,net.jini.core
  .lookup;resolution:=optional,org.jaudiotagger.audio;resolution:=optiona
- l,org.jaudiotagger.tag;resolution:=optional,org.societies.api.comm.xmpp
- .datatypes;resolution:=optional;version="[0.5,1)",org.societies.api.com
- m.xmpp.exceptions;resolution:=optional;version="[0.5,1)",org.societies.
- api.comm.xmpp.interfaces;resolution:=optional;version="[0.5,1)",org.soc
- ieties.api.context.broker;resolution:=optional;version="[0.5,1)",org.so
- cieties.api.context.model;resolution:=optional;version="[0.5,1)",org.so
- cieties.api.identity;resolution:=optional;version="[0.5,1)",org.societi
- es.api.personalisation.model;resolution:=optional;version="[0.5,1)",org
- .societies.api.schema.servicelifecycle.model;resolution:=optional;versi
- on="[0.5,1)",org.societies.api.services;resolution:=optional;version="[
- 0.5,1)",org.springframework.scheduling.annotation;resolution:=optional;
- version="[3.0,4)"
+ l,org.jaudiotagger.tag;resolution:=optional,org.slf4j;resolution:=optio
+ nal;version="[1.6,2)",org.slf4j.helpers;resolution:=optional;version="[
+ 1.6,2)",org.slf4j.spi;resolution:=optional;version="[1.6,2)",org.societ
+ ies.api.comm.xmpp.datatypes;resolution:=optional;version="[0.5,1)",org.
+ societies.api.comm.xmpp.exceptions;resolution:=optional;version="[0.5,1
+ )",org.societies.api.comm.xmpp.interfaces;resolution:=optional;version=
+ "[0.5,1)",org.societies.api.context.broker;resolution:=optional;version
+ ="[0.5,1)",org.societies.api.context.model;resolution:=optional;version
+ ="[0.5,1)",org.societies.api.identity;resolution:=optional;version="[0.
+ 5,1)",org.societies.api.personalisation.model;resolution:=optional;vers
+ ion="[0.5,1)",org.societies.api.schema.servicelifecycle.model;resolutio
+ n:=optional;version="[0.5,1)",org.societies.api.services;resolution:=op
+ tional;version="[0.5,1)",org.springframework.scheduling.annotation;reso
+ lution:=optional;version="[3.0,4)"
 Tool: Bnd-1.50.0

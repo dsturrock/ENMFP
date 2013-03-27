@@ -9,8 +9,7 @@ import org.societies.api.services.IServices;
 public interface MusicIdentifyServerService extends IActionConsumer {
 
 
-	public void start()throws Exception;
-	public void stop() throws Exception;
+
 	public IIdentity getID();
 	//getter/setter methods for the context broker service
 	public ICtxBroker getBroker();
