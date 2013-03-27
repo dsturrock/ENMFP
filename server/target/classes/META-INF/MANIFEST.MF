@@ -1,5 +1,5 @@
 Manifest-Version: 1.0
-Bnd-LastModified: 1364349995838
+Bnd-LastModified: 1364351981964
 Build-Jdk: 1.6.0_41
 Built-By: High Tower
 Bundle-ClassPath: .,org.osgi-3.0.0.jar,json-20090211.jar,slf4j-simple-1.

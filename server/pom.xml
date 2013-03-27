@@ -76,6 +76,7 @@
 							*;resolution:=optional
 						</Import-Package>
 						<!-- <Export-Package></Export-Package> -->
+					<bundleActivator>org.societies.musicidentify.service.IdentifyServer</bundleActivator>
 					</instructions>
 				</configuration>
 			</plugin>
