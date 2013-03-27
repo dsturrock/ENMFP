@@ -1,0 +1,6 @@
+org\societies\musicidentify\service\MusicIdentifyMessageCallback.class
+org\societies\musicidentify\service\MusicIdentifyServer.class
+org\societies\musicidentify\service\MusicIdentifyServer$1.class
+org\societies\musicidentify\service\MusicIdentifyServerService.class
+org\societies\musicidentify\service\IdentifyServer.class
+org\societies\musicidentify\service\MusicIdentifyFeatureServer.class

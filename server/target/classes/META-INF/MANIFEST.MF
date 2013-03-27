@@ -1,6 +1,6 @@
 Manifest-Version: 1.0
-Bnd-LastModified: 1364351981964
-Build-Jdk: 1.6.0_41
+Bnd-LastModified: 1364382270600
+Build-Jdk: 1.7.0_01
 Built-By: High Tower
 Bundle-ClassPath: .,org.osgi-3.0.0.jar,json-20090211.jar,slf4j-simple-1.
  6.1.jar,slf4j-api-1.6.1.jar
@@ -20,8 +20,9 @@ Export-Package: org.societies.musicidentify.service;uses:="org.societies
  .api.comm.xmpp.interfaces,org.societies.api.comm.xmpp.exceptions,javax.
  swing.text,org.societies.api.identity,javax.swing,org.springframework.s
  cheduling.annotation,org.jaudiotagger.tag,org.societies.api.services,or
- g.jaudiotagger.audio,org.societies.api.context.model,org.societies.api.
- schema.servicelifecycle.model";version="0.1.0"
+ g.societies.api.personalisation.model,org.jaudiotagger.audio,org.societ
+ ies.api.context.model,org.societies.api.schema.servicelifecycle.model";
+ version="0.1.0"
 Ignore-Package: javax.microedition.io
 Import-Package: javax.servlet;resolution:=optional,javax.servlet.http;re
  solution:=optional,javax.swing;resolution:=optional,javax.swing.text;re
@@ -34,8 +35,9 @@ Import-Package: javax.servlet;resolution:=optional,javax.servlet.http;re
  ieties.api.context.broker;resolution:=optional;version="[0.5,1)",org.so
  cieties.api.context.model;resolution:=optional;version="[0.5,1)",org.so
  cieties.api.identity;resolution:=optional;version="[0.5,1)",org.societi
- es.api.schema.servicelifecycle.model;resolution:=optional;version="[0.5
- ,1)",org.societies.api.services;resolution:=optional;version="[0.5,1)",
- org.springframework.scheduling.annotation;resolution:=optional;version=
- "[3.0,4)"
+ es.api.personalisation.model;resolution:=optional;version="[0.5,1)",org
+ .societies.api.schema.servicelifecycle.model;resolution:=optional;versi
+ on="[0.5,1)",org.societies.api.services;resolution:=optional;version="[
+ 0.5,1)",org.springframework.scheduling.annotation;resolution:=optional;
+ version="[3.0,4)"
 Tool: Bnd-1.50.0

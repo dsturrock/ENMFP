@@ -11,7 +11,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.societies.api.context.broker.ICtxBroker;
 
-public class IdentifyServer implements BundleActivator{
+public class IdentifyServer{
 	
 public ICtxBroker ctxBrokerService;
 private Logger LOG = LoggerFactory.getLogger(MusicIdentifyServer.class);	
@@ -43,23 +43,21 @@ public void setBroker(ICtxBroker cxtBroker){
 	this.ctxBrokerService=cxtBroker;
 }
  
-@Override
 public void start(BundleContext context) throws Exception {
-LOG.debug("IMPL CLASS STARTED");
+LOG.debug("IDENTIFY CLASS STARTED");
 	musicServiceServerTracker = new ServiceTracker(context, MusicIdentifyServerService.class.getName(), null);
 musicServiceServerTracker.open();
 
 MusicIdentifyServerService mi = (MusicIdentifyServerService) musicServiceServerTracker.getService();
-mi.start(context);
+mi.start();
 
 }
- @Override
 public void stop(BundleContext context) {
 	MusicIdentifyServerService mi = (MusicIdentifyServerService) musicServiceServerTracker.getService();
 	if (mi == null) {
-		System.out.println("No MusicIdentify service available for termination.");
+		LOG.debug("No MusicIdentify service available for termination.");
 	} else {
-		System.out.println("Music Identify Service terminated successfully");
+		LOG.debug("Music Identify Service terminated successfully");
 	}
 	musicServiceServerTracker.close();
 

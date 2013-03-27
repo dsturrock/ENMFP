@@ -57,8 +57,11 @@
 			<scope>provided</scope>
 		</dependency>
 
-		<dependency> <groupId>org.slf4j</groupId> <artifactId>slf4j-simple</artifactId> 
-			<version>1.6.1</version> </dependency> 
+		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>slf4j-simple</artifactId>
+			<version>1.6.1</version>
+		</dependency>
 	</dependencies>
 	<build>
 		<plugins>
@@ -68,7 +71,6 @@
 				<extensions>true</extensions>
 				<configuration>
 					<instructions>
-						<Bundle-Activator></Bundle-Activator>
 						<Embed-Dependency>*;scope=compile|runtime</Embed-Dependency>
 						<Embed-Transitive>true</Embed-Transitive>
 						<Import-Package>
@@ -76,7 +78,6 @@
 							*;resolution:=optional
 						</Import-Package>
 						<!-- <Export-Package></Export-Package> -->
-					<bundleActivator>org.societies.musicidentify.service.IdentifyServer</bundleActivator>
 					</instructions>
 				</configuration>
 			</plugin>
