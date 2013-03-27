@@ -41,12 +41,13 @@ import java.net.URL;
 import java.net.URLEncoder;
 import java.util.*;
 import java.util.Map.Entry;
-import java.util.concurrent.ExecutionException;
-import java.util.concurrent.Future;
-import java.util.logging.Logger;
 
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.ServiceRegistration;
+import org.osgi.util.tracker.ServiceTracker;
+import org.slf4j.LoggerFactory;
+import org.slf4j.Logger;
+
 import org.societies.api.comm.xmpp.datatypes.Stanza;
 import org.societies.api.comm.xmpp.exceptions.CommunicationException;
 import org.societies.api.comm.xmpp.interfaces.ICommManager;
@@ -68,7 +69,7 @@ public class MusicIdentifyServer implements MusicIdentifyServerService{
 		private IIdentity user;
 		public IServices serviceMgmt; 
 		//Initialise logwriter
-		//private static Logger log = LoggerFactory.getLogger(MusicIdentify.class);	
+		private Logger LOG = LoggerFactory.getLogger(MusicIdentifyServer.class);	
 
 		private ServiceRegistration registration;
 		// private Requestor requestor;
@@ -97,18 +98,27 @@ public class MusicIdentifyServer implements MusicIdentifyServerService{
 		Map<String,Integer> genreTally = new HashMap<String,Integer>();
 		
 		File input;
+		private ServiceTracker musicServiceServerTracker;
+		private MusicIdentifyMessageCallback callback;
 		
 		public MusicIdentifyServer(){
 			
+			//MusicIdentifyServerService mi = (MusicIdentifyServerService) musicServiceServerTracker.getService();
+			LOG.debug("SERVER IMPL");
+			//mi.start(context);
 
 			
 		}
+		@Override
 		public void start(BundleContext context)throws Exception { 
 			
 			String OS =System.getProperty("os.name");
-			System.out.println("OS: "+ OS);
+			LOG.debug("OS: "+ OS);
 			Properties props = new Properties();
-			
+			LOG.debug("IMPL CLASS STARTED");
+			musicServiceServerTracker = new ServiceTracker(context, MusicIdentifyServerService.class.getName(), null);
+		musicServiceServerTracker.open();
+
 			props.put("Language", "English");
 			
 			registration = context.registerService(MusicIdentifyServerService.class.getName(), this, props);
@@ -124,10 +134,21 @@ public class MusicIdentifyServer implements MusicIdentifyServerService{
 			getCommManager().sendMessage(note, "Bundle: " + context.getBundle() + " started");
 			}
 
+		@Override
 			public void stop(BundleContext context) throws Exception {
 				Stanza note = new Stanza("startup",user,getCommManager().getIdManager().fromJid(getCommManager().getIdManager().getDomainAuthorityNode().getJid()));
 				
 				getCommManager().sendMessage(note, "Bundle: " + context.getBundle() + " stopped");
+		}
+		
+		public int init(){
+			
+			LOG.debug("SERVER IMPL INIT");
+				user = getCommManager().getIdManager().getThisNetworkNode();
+				//new Thread(new Handle()).start(); //start communication handle
+		        
+
+     return 0;
 		}
 		@Async
 		private void delayedinit(){
@@ -150,12 +171,12 @@ public class MusicIdentifyServer implements MusicIdentifyServerService{
 			bInitialising= false;
 		}
 		public IIdentity getID(){
-			System.out.println("User ID: "+this.user);
+			LOG.debug("User ID: "+this.user);
 			return this.user;
 		}
 		//getter/setter methods for the context broker service
 		public ICtxBroker getBroker(){
-			System.out.println("Context Broker: " +this.ctxBrokerService);
+			LOG.debug("Context Broker: " +this.ctxBrokerService);
 			return this.ctxBrokerService;
 		}
 		
@@ -171,6 +192,12 @@ public class MusicIdentifyServer implements MusicIdentifyServerService{
 			this.serviceMgmt = serviceMgmt;
 		}
 		
+		public MusicIdentifyMessageCallback getMessageCallback(){
+			return callback;
+		}
+		public void setMessageCallback(MusicIdentifyMessageCallback callback){
+			this.callback=callback;
+		}
 		public ICommManager getCommManager() {
 			return commManager;
 		}
@@ -276,9 +303,18 @@ public class MusicIdentifyServer implements MusicIdentifyServerService{
 	        parent.add(playlists,BorderLayout.PAGE_END);
 		}
 		  
+		/* ------------------------------------------------
+		 * Retrieve information sent from client CSS nodes
+		 * ------------------------------------------------
+		 */
 		@Async
-		
-		private void inbox(){
+				private void inbox(){
+			
+			String sharedPlaylistString = getMessageCallback().getPlaylist();
+			if(sharedPlaylistString==null)
+				sharedPlaylistString=
+				
+			PlaylistString+= "\n "+ sharedPlaylistString;
 			
 			
 		}
@@ -301,10 +337,10 @@ public class MusicIdentifyServer implements MusicIdentifyServerService{
 				
 			}
 			catch(IOException ie){
-				System.out.println("Exception trying to decode file: "+ inputFile + " Exception: " +ie);
+				LOG.debug("Exception trying to decode file: "+ inputFile + " Exception: " +ie);
 			}
 			catch(Exception e){
-				System.out.println("Exception "+e);
+				LOG.debug("Exception "+e);
 			}
 				
 					
@@ -373,7 +409,7 @@ public class MusicIdentifyServer implements MusicIdentifyServerService{
 				BufferedReader urlStream = new BufferedReader(new InputStreamReader(ENMFPUrl.openStream()));
 				String line = null;  
 				while ((line = urlStream.readLine()) != null && line!="") {  
-					System.out.println(line);
+					LOG.debug(line);
 					JSONString=line;
 				} 
 				JSONObject response = new JSONObject(JSONString);
@@ -387,12 +423,12 @@ public class MusicIdentifyServer implements MusicIdentifyServerService{
 					automaticPlaylist+=artist+" - "+title+"\n";
 				}
 				
-				System.out.println("Finished with URL call");
+				LOG.debug("Finished with URL call");
 				urlStream.close();
 				
 				}
 				catch(Exception e){
-					System.out.println("Error calling ENMFP URL: "+ e);
+					LOG.debug("Error calling ENMFP URL: "+ e);
 				}
 			
 			

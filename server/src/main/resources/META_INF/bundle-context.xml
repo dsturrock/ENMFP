@@ -13,14 +13,10 @@ xmlns:osgi-compendium="http://www.springframework.org/schema/osgi-compendium"
 xmlns:ctx="http://www.springframework.org/schema/context">
 
 
-<bean id="ctxBrokerService" class="org.societies.musicidentify.service.ServiceImpl">
+<bean id="ctxBrokerService" class="org.societies.musicidentify.service.MusicIdentifyServer">
 <!-- a reference to a required service. 'name' should be the same as member
 variable in your impl class and the 'ref' should be the same as the osgi:service
 ref in the bundle-context-osgi.xml file -->
 <property name="ctxBrokerService" ref="ctxBrokerRef" />
-</bean>
-<bean id="PersonalisationManager" class="org.societies.personalisation.management.impl.PersonalisationManager" depends-on="UserPrefMgr, UserCtxBroker">	
-<property name ="prefMgr" ref="UserPrefMgr"></property>
-<property name="ctxBroker" ref="UserCtxBroker"></property>
 </bean>
 </beans>

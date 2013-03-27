@@ -27,6 +27,8 @@
 			<version>2.2.0-SNAPSHOT</version>
 			<scope>provided</scope>
 		</dependency>
+		<dependency> <groupId>org.slf4j</groupId> <artifactId>slf4j-simple</artifactId> 
+			<version>1.6.1</version> </dependency> 
 		<dependency>
 			<groupId>org.societies.api.external</groupId>
 			<artifactId>societies-api</artifactId>
@@ -85,8 +87,10 @@
 						<Bundle-Activator></Bundle-Activator>
 						<Embed-Dependency>*;scope=compile|runtime</Embed-Dependency>
 						<Embed-Transitive>true</Embed-Transitive>
-						<!--  <Import-Package>*;resolution:=optional</Import-Package>-->
-						<!-- <Export-Package></Export-Package>-->
+						<Import-Package>
+							!javax.microedition.io,
+							*;resolution:=optional
+						</Import-Package>						<!-- <Export-Package></Export-Package>-->
 					</instructions>
 				</configuration>
 			</plugin>

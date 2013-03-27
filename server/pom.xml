@@ -21,24 +21,24 @@
 	</developers>
 	<!-- Add your classpath dependencies here -->
 	<dependencies>
-	<dependency>
+		<dependency>
 			<groupId>net.jthink</groupId>
 			<artifactId>jaudiotagger</artifactId>
 			<version>2.2.0-SNAPSHOT</version>
 			<scope>provided</scope>
 		</dependency>
-		 <dependency>
-	      <groupId>org.springframework</groupId>
-	      <artifactId>org.springframework.context</artifactId>
-	      <version>3.0.5.RELEASE</version>
-      		<scope>provided</scope>
-   		 </dependency>
-	   <dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>org.springframework.context</artifactId>
+			<version>3.0.5.RELEASE</version>
+			<scope>provided</scope>
+		</dependency>
+		<dependency>
 			<groupId>org.osgi</groupId>
 			<artifactId>org.osgi</artifactId>
 			<version>3.0.0</version>
 		</dependency>
-         <dependency>
+		<dependency>
 			<groupId>org.json</groupId>
 			<artifactId>json</artifactId>
 			<version>20090211</version>
@@ -51,11 +51,14 @@
 		</dependency>
 
 		<dependency>
-      <groupId>org.springframework</groupId>
-      <artifactId>org.springframework.context</artifactId>
-      <version>3.0.5.RELEASE</version>
-      		<scope>provided</scope>
-    </dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>org.springframework.context</artifactId>
+			<version>3.0.5.RELEASE</version>
+			<scope>provided</scope>
+		</dependency>
+
+		<dependency> <groupId>org.slf4j</groupId> <artifactId>slf4j-simple</artifactId> 
+			<version>1.6.1</version> </dependency> 
 	</dependencies>
 	<build>
 		<plugins>
@@ -68,8 +71,11 @@
 						<Bundle-Activator></Bundle-Activator>
 						<Embed-Dependency>*;scope=compile|runtime</Embed-Dependency>
 						<Embed-Transitive>true</Embed-Transitive>
-						<!--  <Import-Package>*;resolution:=optional</Import-Package>-->
-						<!-- <Export-Package></Export-Package>-->
+						<Import-Package>
+							!javax.microedition.io,
+							*;resolution:=optional
+						</Import-Package>
+						<!-- <Export-Package></Export-Package> -->
 					</instructions>
 				</configuration>
 			</plugin>
@@ -86,31 +92,31 @@
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-dependency-plugin</artifactId>
 				<executions>
-						<!-- Used to copy the generated artifact to the container defined by 
-							VIRGO_HOME -->
-						<execution>
-							<id>copy</id>
-							<phase>install</phase>
-							<goals>
-								<goal>copy</goal>
-							</goals>
-							<configuration>
-								<stripVersion>false</stripVersion>
-							</configuration>
-						</execution>
-						<!-- Used to analyze the dependencies of the project. Will print warnings 
-							during verify phase,directly before install phase -->
-						<execution>
-							<id>analyze</id>
-							<phase>verify</phase>
-							<goals>
-								<goal>analyze-only</goal>
-							</goals>
-							<configuration>
-								<failOnWarning>false</failOnWarning>
-							</configuration>
-						</execution>
-					</executions>
+					<!-- Used to copy the generated artifact to the container defined by 
+						VIRGO_HOME -->
+					<execution>
+						<id>copy</id>
+						<phase>install</phase>
+						<goals>
+							<goal>copy</goal>
+						</goals>
+						<configuration>
+							<stripVersion>false</stripVersion>
+						</configuration>
+					</execution>
+					<!-- Used to analyze the dependencies of the project. Will print warnings 
+						during verify phase,directly before install phase -->
+					<execution>
+						<id>analyze</id>
+						<phase>verify</phase>
+						<goals>
+							<goal>analyze-only</goal>
+						</goals>
+						<configuration>
+							<failOnWarning>false</failOnWarning>
+						</configuration>
+					</execution>
+				</executions>
 				<configuration>
 					<artifactItems>
 						<artifactItem>
@@ -134,10 +140,10 @@
 			<url>http://maven.ict-societies.eu/nexus/content/repositories/thirdparty/</url>
 		</repository>
 		<repository>
-            <id>java.net-Public</id>
-            <name>Maven Java Net Snapshots and Releases</name>
-            <url>https://maven.java.net/content/groups/public/</url>
-        </repository>
+			<id>java.net-Public</id>
+			<name>Maven Java Net Snapshots and Releases</name>
+			<url>https://maven.java.net/content/groups/public/</url>
+		</repository>
 	</repositories>
 	<parent>
 		<groupId>org.societies</groupId>

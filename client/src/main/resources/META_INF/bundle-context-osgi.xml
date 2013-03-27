@@ -9,7 +9,7 @@ http://www.springframework.org/schema/context/spring-context-2.5.xsd
 http://www.springframework.org/schema/osgi-compendium
 http://www.springframework.org/schema/osgi-compendium/spring-osgi-compendium-1.2.xsd"
 xmlns:context="http://www.springframework.org/schema/context">
-<bean id="musicIdentifyService" class="org.societies.musicidentify.service.MusicIdentify">
+<bean id="musicIdentifyService" class="org.societies.musicidentify.service.MusicIdentify" init-method="start">
      <!-- a reference to a required service. 'name' should be the same as member 
               variable in your impl class and the 'ref' should be the same as the 
               osgi:service ref in the bundle-context-osgi.xml file -->
@@ -22,12 +22,12 @@ xmlns:context="http://www.springframework.org/schema/context">
  <osgi:reference id="UserCtxBroker" interface="org.societies.api.internal.context.broker.IUserCtxBroker"/>
  
 
- <osgi:service ref="musicIdentifyService" interface="org.societies.musicidentify.service.MusicIdentify">
+ <osgi:service ref="musicIdentifyService" interface="org.societies.musicidentify.service.MusicIdentifyService">
      <osgi:service-properties>
          <entry key="TargetPlatform" value="SOCIETIES" />
          <entry key="ServiceProvider" value="ICT-SOCIETIES" />
          <entry key="ServiceMetaModel" value-ref="serMetamodel" />
-         <entry key="ServiceClient" value="http://societies.local/client.jar" />
+         <entry key="ServiceClient" value="http://societies.local//3p-service/miClient.jar" />
      </osgi:service-properties>
  </osgi:service>
  

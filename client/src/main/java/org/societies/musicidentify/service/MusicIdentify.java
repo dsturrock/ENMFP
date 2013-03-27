@@ -48,6 +48,8 @@ import java.util.*;
 import java.util.Map.Entry;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Future;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import org.osgi.framework.BundleActivator;
 import org.osgi.framework.BundleContext;
@@ -74,7 +76,7 @@ public class MusicIdentify implements MusicIdentifyService {
 	private IIdentity user;
 	public IServices serviceMgmt; 
 	//Initialise logwriter
-	//private static Logger log = LoggerFactory.getLogger(MusicIdentify.class);	
+	private  Logger LOG = LoggerFactory.getLogger(MusicIdentify.class);	
 
 	private ServiceRegistration registration;
 	// private Requestor requestor;
@@ -113,7 +115,7 @@ public class MusicIdentify implements MusicIdentifyService {
 	public void start(BundleContext context)throws Exception { 
 		
 		String OS =System.getProperty("os.name");
-		System.out.println("OS: "+ OS);
+		LOG.info("OS: "+ OS);
 		Properties props = new Properties();
 		
 		props.put("Language", "English");
@@ -157,12 +159,12 @@ public class MusicIdentify implements MusicIdentifyService {
 		bInitialising= false;
 	}
 	public IIdentity getID(){
-		System.out.println("User ID: "+this.user);
+		LOG.debug("User ID: "+this.user);
 		return this.user;
 	}
 	//getter/setter methods for the context broker service
 	public ICtxBroker getBroker(){
-		System.out.println("Context Broker: " +this.ctxBrokerService);
+		LOG.debug("Context Broker: " +this.ctxBrokerService);
 		return this.ctxBrokerService;
 	}
 	
@@ -339,10 +341,10 @@ public class MusicIdentify implements MusicIdentifyService {
 			
 		}
 		catch(IOException ie){
-			System.out.println("Exception trying to decode file: "+ inputFile + " Exception: " +ie);
+			LOG.debug("Exception trying to decode file: "+ inputFile + " Exception: " +ie);
 		}
 		catch(Exception e){
-			System.out.println("Exception "+e);
+			LOG.debug("Exception "+e);
 		}
 			
 				
@@ -411,7 +413,7 @@ public class MusicIdentify implements MusicIdentifyService {
 			BufferedReader urlStream = new BufferedReader(new InputStreamReader(ENMFPUrl.openStream()));
 			String line = null;  
 			while ((line = urlStream.readLine()) != null && line!="") {  
-				System.out.println(line);
+				LOG.debug(line);
 				JSONString=line;
 			} 
 			JSONObject response = new JSONObject(JSONString);
@@ -425,12 +427,12 @@ public class MusicIdentify implements MusicIdentifyService {
 				automaticPlaylist+=artist+" - "+title+"\n";
 			}
 			
-			System.out.println("Finished with URL call");
+			LOG.debug("Finished with URL call");
 			urlStream.close();
 			
 			}
 			catch(Exception e){
-				System.out.println("Error calling ENMFP URL: "+ e);
+				LOG.debug("Error calling ENMFP URL: "+ e);
 			}
 		
 		
